@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import UserList from "./components/UserList";
+import UserDetails from "./components/UserDetails";
+import useUsers from "./hooks/useUsers";
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { data, isLoading, isError } = useUsers();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const selectedUser = data?.find((user) => user.id === selectedId);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Grid container spacing={2} flexGrow={1} height={"100%"}>
+      <Grid
+        xs={12}
+        container
+        md={6}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <UserList
+          data={data}
+          isError={isError}
+          isLoading={isLoading}
+          setSelectedUser={setSelectedId}
+          selectedUserId={selectedId}
+        />
+      </Grid>
+      <Grid
+        xs={12}
+        md={6}
+        container
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <UserDetails data={selectedUser} />
+      </Grid>
+    </Grid>
+  );
 }
 
-export default App
+export default App;
