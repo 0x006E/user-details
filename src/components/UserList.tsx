@@ -6,16 +6,13 @@ import Typography from "@mui/material/Typography";
 import {
   Box,
   ListItemButton,
-  MenuItem,
   Paper,
-  Select,
   Theme,
   useMediaQuery,
 } from "@mui/material";
 
 import Loader from "./Loader";
 import { User } from "../models/User";
-import { useTheme } from "@emotion/react";
 
 export interface UserListProps {
   data: User[] | undefined;
