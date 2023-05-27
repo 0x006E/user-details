@@ -17,8 +17,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true
   },
-  "include": ["src"],
+  "include": ["src", "tests/Loader.test.tsx", "tests/setup.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

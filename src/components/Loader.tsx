@@ -1,8 +1,6 @@
-import './Loader.css'
+import "./Loader.css";
 function Loader() {
-    return (
-        <div className="loader"></div>
-    )
+  return <div data-testid="loader" className="loader"></div>;
 }
 
-export default Loader
+export default Loader;

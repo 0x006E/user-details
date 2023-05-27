@@ -1,5 +1,5 @@
 export interface User {
-  createdAt: Date;
+  createdAt: string;
   avatar: string;
   Bio: string;
   jobTitle: string;

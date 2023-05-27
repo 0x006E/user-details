@@ -88,6 +88,7 @@ export default function UserList(props: UserListProps) {
         >
           {data?.map((i) => (
             <ListItemButton
+              role="listitem"
               key={i.profile.username}
               selected={selectedUserId === i.id}
               onClick={() => setSelectedUser(i.id)}
