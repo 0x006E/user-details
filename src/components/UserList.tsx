@@ -109,7 +109,10 @@ export default function UserList(props: UserListProps) {
                   key={i.profile.username}
                   alt={i.profile.firstName}
                   src={i.avatar}
-                  sx={{ outline: "white", minWidth: matches ? "auto" : "0" }}
+                  sx={{
+                    minWidth: matches ? "auto" : "0",
+                    outline: "1px solid gray",
+                  }}
                 />
               </ListItemAvatar>
               <ListItemText
