@@ -33,6 +33,8 @@ const TextField = ({
         borderRadius: 1,
         padding: 0.75,
         userSelect: "none",
+        textOverflow: "ellipsis",
+        whiteSpace: isBio ? "normal" : "nowrap",
       }}
     >
       {value}
@@ -81,11 +83,12 @@ function UserDetails(props: UserDetailsProps) {
           display={"flex"}
           alignItems={"center"}
           flexDirection={"column"}
-          gap={2}
+          gap={1}
           sx={{
             p: 0.1,
             overflowX: "hidden",
             overflowY: "auto",
+            height: "100%",
           }}
         >
           <Avatar

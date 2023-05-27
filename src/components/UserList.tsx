@@ -1,14 +1,21 @@
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { Box, ListItemButton, Paper } from "@mui/material";
+import {
+  Box,
+  ListItemButton,
+  MenuItem,
+  Paper,
+  Select,
+  Theme,
+  useMediaQuery,
+} from "@mui/material";
 
 import Loader from "./Loader";
 import { User } from "../models/User";
+import { useTheme } from "@emotion/react";
 
 export interface UserListProps {
   data: User[] | undefined;
@@ -20,15 +27,16 @@ export interface UserListProps {
 
 export default function UserList(props: UserListProps) {
   const { data, isLoading, isError, setSelectedUser, selectedUserId } = props;
+  const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
   return (
     <Paper
       elevation={4}
       sx={{
         maxWidth: "400px",
         width: "100%",
-        height: "60vh",
+        height: matches ? "60vh" : "min-content",
         overflow: "hidden",
-        p: 4,
+        p: matches ? 4 : 2,
         borderRadius: 4,
         background: "rgba(17, 25, 40, 0.75)",
         backdropFilter: " blur(16px) saturate(180%)",
@@ -36,7 +44,7 @@ export default function UserList(props: UserListProps) {
       }}
     >
       <Typography
-        variant="h5"
+        variant={matches ? "h5" : "body1"}
         gutterBottom
         fontWeight={"bold"}
         textAlign={"center"}
@@ -47,7 +55,7 @@ export default function UserList(props: UserListProps) {
 
       {isError && (
         <Typography
-          variant="h5"
+          variant={matches ? "h5" : "body1"}
           gutterBottom
           fontWeight={"bold"}
           textAlign={"center"}
@@ -75,16 +83,16 @@ export default function UserList(props: UserListProps) {
             gap: 2,
             height: "calc(100% - 32px)",
             display: "flex",
-            flexDirection: "column",
+            flexDirection: matches ? "column" : "row",
           }}
         >
           {data?.map((i) => (
             <ListItemButton
               key={i.profile.username}
-              alignItems="flex-start"
               selected={selectedUserId === i.id}
               onClick={() => setSelectedUser(i.id)}
               sx={{
+                gap: matches ? 2 : 0.5,
                 "&.Mui-selected": {
                   background: "rgba(255,255,255,0.25)",
                   borderRadius: 4,
@@ -92,6 +100,10 @@ export default function UserList(props: UserListProps) {
                 "& > MuiTouchRipple-root": {
                   borderRadius: 4,
                 },
+                minWidth: matches ? "100%" : "fit-content",
+                flexDirection: matches ? "row" : "column",
+                justifyContent: matches ? "flex-start" : "center",
+                alignItems: "center",
               }}
             >
               <ListItemAvatar>
@@ -99,27 +111,33 @@ export default function UserList(props: UserListProps) {
                   key={i.profile.username}
                   alt={i.profile.firstName}
                   src={i.avatar}
-                  sx={{ outline: "white" }}
+                  sx={{ outline: "white", minWidth: matches ? "auto" : "0" }}
                 />
               </ListItemAvatar>
               <ListItemText
                 primary={i.profile.firstName + " " + i.profile.lastName}
                 color="white"
+                sx={{
+                  "&>.MuiTypography-root": {
+                    fontSize: matches ? "1rem" : "0.75rem",
+                  },
+                }}
                 secondary={
-                  <>
-                    <Typography
-                      sx={{ display: "inline", color: "white" }}
-                      component="span"
-                      variant="body2"
-                    >
-                      {i.profile.username}
-                    </Typography>
-                  </>
+                  matches && (
+                    <>
+                      <Typography
+                        sx={{ display: "inline", color: "white" }}
+                        component="span"
+                        variant="body2"
+                      >
+                        {i.profile.username}
+                      </Typography>
+                    </>
+                  )
                 }
               />
             </ListItemButton>
           ))}
-          <Divider component={"li"} />
         </List>
       )}
     </Paper>
